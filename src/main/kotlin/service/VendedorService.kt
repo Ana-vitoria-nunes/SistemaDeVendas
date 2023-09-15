@@ -11,11 +11,12 @@ class VendedorService {
         fun addVendedor(nome: String, email: String, senha: String, cpf: String, salario: Double) {
             try {
                 if (!validacao.isValidVendedorInfo(nome, email, cpf)) {
-                    println("As informações do livro não podem estar vazias ou nulas.")
+                    println("As informações do Vendedor não podem estar vazias ou nulas.")
                     return
                 }
                 if (!validacao.isValidEmail(email)) {
                     println("Seu e-mail precisa conter @")
+                    return
                 }
                 val sql =
                     "INSERT INTO vendedor (nome_vendedor, email_vendedor, senha_vendedor, cpf_vendedor,salario_vendedor) VALUES ('$nome', '$email', '$senha', '$cpf','$salario')"
