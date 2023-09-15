@@ -121,9 +121,8 @@ class Validacao {
 
     fun isValidLibrarianCredentials(alias: String, senha: String): Boolean {
         if (alias.isBlank() || senha.isBlank()) {
-            throw IllegalArgumentException("O nome de Gerente e a senha não podem estar vazios.")
+           println("O nome de Gerente e a senha não podem estar vazios.")
         }
-
         if (isAdmin(alias)) {
             val sql = "SELECT COUNT(*) FROM vendedor WHERE nome_vendedor=? AND senha_vendedor=?"
 
@@ -141,15 +140,16 @@ class Validacao {
                 if (count > 0) {
                     return true
                 } else {
-                    throw IllegalArgumentException("Credenciais de gerente inválidas.")
+                   println("Credenciais de gerente inválidas.")
                 }
             } catch (e: SQLException) {
                 e.printStackTrace()
-                throw RuntimeException("Erro ao verificar as credenciais do usuário.")
+               println("Erro ao verificar as credenciais do usuário.")
             }
         } else {
-            throw IllegalArgumentException("Acesso não autorizado. Você não é um gerente.")
+            println("Acesso não autorizado. Você não é um gerente.")
         }
+        return false
     }
 
     fun isValidUserCredentials(alias: String, senha: String): Boolean {
@@ -175,7 +175,6 @@ class Validacao {
         } catch (e: SQLException) {
             e.printStackTrace()
         }
-
         return false
     }
 }

@@ -1,27 +1,49 @@
 package view
 
 import model.InputUserModel
+import model.Validacao
 import service.VendaService
 import service.VendedorService
 
 class MenuView {
     companion object {
-        val loginAdm=LoginAdmView()
-        val loginVendedor=LoginVendedorView()
+        val loginAdm = LoginAdmView()
+        val loginVendedor = LoginVendedorView()
         fun iniciar() {
-            var option: Int
-            do {
-                menuInicia()
-                option = InputUserModel.readIntFromUser("Qual opção deseja")
+                var option: Int
+                do {
+                    menuInicia()
+                    option = InputUserModel.readIntFromUser("Qual opção deseja")
 
-                when (option) {
-                    0 -> println("Encerrando o programa...")
-                    1 -> loginAdm.CaseLoginAdm()
-                    2 -> loginVendedor.CaseLoginVendedor()
-                    3 -> addUser()
-                    else -> println("Opção inválida, tente novamente!")
-                }
-            } while (option != 0)
+                    when (option) {
+                        0 -> println("Encerrando o programa...")
+                        1 -> {
+                            val name = InputUserModel.readStringFromUser("Digite seu nome: ")
+                            val password = InputUserModel.readStringFromUser("Digite sua senha: ")
+
+                            if (Validacao().isValidLibrarianCredentials(name, password)) {
+                                println("\n========================== Bem-Vindo $name ==========================")
+                                loginAdm.CaseLoginAdm()
+                            }
+                        }
+
+                        2 -> {
+                            val name = InputUserModel.readStringFromUser("Digite seu nome: ")
+                            val password = InputUserModel.readStringFromUser("Digite sua senha: ")
+
+                            if (Validacao().isValidUserCredentials(name, password)) {
+                                println("\n========================== Bem-Vindo $name ==========================")
+                                loginVendedor.CaseLoginVendedor()
+                            } else {
+                                println("Senha ou nome invalido!")
+                            }
+                        }
+
+                        3 -> addUser()
+                        else -> println("Opção inválida, tente novamente!")
+                    }
+                } while (option != 0)
+
         }
 
         private fun addUser() {

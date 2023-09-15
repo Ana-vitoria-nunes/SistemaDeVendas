@@ -5,34 +5,25 @@ import model.Validacao
 import service.ProdutoService
 import service.QueryService
 import service.VendedorService
-
 class LoginAdmView {
     fun menuInicia() {
         println("\nMenu Gerente")
         println("0. Volta menu inicial\n1. Menu Vendedor\n2. Menu produto\n3. Menu especial ")
     }
     fun CaseLoginAdm() {
-        val name = InputUserModel.readStringFromUser("Digite seu nome: ")
-        val password = InputUserModel.readStringFromUser("Digite sua senha: ")
+        var option: Int
+        do {
+            menuInicia()
+            option = InputUserModel.readIntFromUser("Qual opção deseja")
 
-        if (Validacao().isValidLibrarianCredentials(name, password)) {
-            println("\n========================== Bem-Vindo $name ==========================")
-            var option: Int
-            do {
-                menuInicia()
-                option = InputUserModel.readIntFromUser("Qual opção deseja")
-
-                when (option) {
-                    0 -> MenuView.iniciar()
-                    1 -> CaseVendedor()
-                    2 -> CaseProduto()
-                    3 -> CaseEspecial()
-                    else -> println("Opção inválida, tente novamente!")
-                }
-            } while (option != 0)
-        } else {
-            println("Senha ou nome invalido!")
-        }
+            when (option) {
+                0 -> MenuView.iniciar()
+                1 -> CaseVendedor()
+                2 -> CaseProduto()
+                3 -> CaseEspecial()
+                else -> println("Opção inválida, tente novamente!")
+            }
+        } while (option != 0)
     }
     fun menuVendedor() {
         println("\nMenu do Vendedor")
@@ -107,9 +98,8 @@ class LoginAdmView {
     }
     fun menuEspecial() {
         println("\nMenu Especial")
-        println("0. Volra gerente\n1. Listar vendas acima de 10.0\n2.Listar Salario dos vendedores Ordenados\n3. Ver clientes com email que contem zup.com.br ")
+        println("0. Volra gerente\n1. Listar vendas acima de 10.0\n2.Listar Salario dos vendedores Ordenados\n3. Ver quantos clients contem zup.com.br no e-mail ")
     }
-
     fun CaseEspecial() {
         var option: Int
         do {

@@ -5,7 +5,6 @@ import model.Validacao
 import java.sql.SQLException
 
 class ClienteService {
-    companion object {
         var connection = Connect().creatConnect()
         var validacao = Validacao()
 
@@ -17,6 +16,7 @@ class ClienteService {
                 }
                 if (!validacao.isValidEmail(email)) {
                     println("Seu e-mail precisa conter @")
+                    return
                 }
 
                 val sql =
@@ -30,23 +30,6 @@ class ClienteService {
                 e.printStackTrace()
             }
         }
-//        fun deleteCliente(id: Int) {
-//            if (!validacao.isValidClienteId(id)) {
-//                println("ID de Cliente inválido!")
-//                return
-//            }
-//            val sql =
-//                "DELETE FROM cliente WHERE id_cliente=$id"
-//
-//            try {
-//                val statement = connection.createStatement()
-//                statement.executeUpdate(sql)
-//                println("Cliente deletado com sucesso!")
-//                statement.close()
-//            } catch (e: SQLException) {
-//                e.printStackTrace()
-//            }
-//        }
         fun deleteCliente(id: Int) {
             if (!validacao.isValidClienteId(id)) {
                 println("ID de Cliente inválido!")
@@ -103,6 +86,7 @@ class ClienteService {
                 e.printStackTrace()
             }
         }
+
         fun listCliente() {
             val statement = connection.createStatement()
             val resultSet =
@@ -121,7 +105,5 @@ class ClienteService {
             } catch (e: SQLException) {
                 e.printStackTrace()
             }
-            println()
         }
-    }
 }
