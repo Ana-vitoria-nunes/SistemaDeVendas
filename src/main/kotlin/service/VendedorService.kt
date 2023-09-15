@@ -28,14 +28,13 @@ class VendedorService {
                 e.printStackTrace()
             }
         }
-
         fun deleteVendedor(id: Int) {
             if (!validacao.isValidVendedorId(id)) {
                 println("ID de Vendedor inválido!")
                 return
             }
             val sql =
-                "DELETE FROM vendedor WHERE id=$id"
+                "DELETE FROM vendedor WHERE id_vendedor=$id"
 
             try {
                 val statement = connection.createStatement()
@@ -46,18 +45,18 @@ class VendedorService {
                 e.printStackTrace()
             }
         }
-
         fun updateVendedor(id: Int, email: String, senha: String) {
+            if (!validacao.isValidVendedorId(id)) {
+                println("ID de Vendedor inválido!")
+                return
+            }
+            if (!validacao.isValidEmail(email)) {
+                println("Seu e-mail precisa conter @")
+                return
+            }
+            val sql =
+                "UPDATE vendedor SET email_vendedor='$email', senha_vendedor='$senha' WHERE id_vendedor=$id"
             try {
-                if (!validacao.isValidVendedorId(id)) {
-                    println("ID de Vendedor inválido!")
-                    return
-                }
-                if (!validacao.isValidEmail(email)) {
-                    println("Seu e-mail precisa conter @")
-                }
-                val sql =
-                    "UPDATE vendedor SET email_vendedor='$email', senha_vendedor='$senha' WHERE id=$id"
                 val statement = connection.createStatement()
                 statement.executeUpdate(sql)
                 println("Vendedor com id $id atualizado com sucesso!")
@@ -66,7 +65,6 @@ class VendedorService {
                 e.printStackTrace()
             }
         }
-
         fun listVendedor() {
             val statement = connection.createStatement()
             val resultSet =

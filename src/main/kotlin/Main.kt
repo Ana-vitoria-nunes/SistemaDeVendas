@@ -1,5 +1,7 @@
-
+import service.ProdutoService
+import service.QueryService
 import service.VendaService
+import view.MenuView
 
 fun main() {
 //    ClienteService.addCliente("Ana","ana@zup.com.br","123456","Rua do desafio 580")
@@ -16,7 +18,19 @@ fun main() {
 //     ProdutoService.addProduto("Motorola Moto E22",697.0)
 //     ProdutoService.listProduto()
 
-    VendaService.addVenda(1,2,2,3)
-    VendaService.listVenda()
+//    VendaService.addVenda(1,2,2,3)
+//    VendaService.addVenda(1,1,1,2)
+//    VendaService.addVenda(2,2,4,2)
+//    VendaService.addVenda(2,2,3,null)
+//    VendaService.listVenda()
 
+//    QueryService.UserEmailZup()
+//    QueryService.listItensVendidosAcimaDe10()
+//    VendaService.addVenda(2,1,1,null)
+//    VendaService.listVenda()
+//    QueryService.updateValoresNulosParaZero()
+//    VendaService.listVenda()
+//   QueryService.moveVendasComIdClienteNulo()
+
+   MenuView.iniciar()
 }

@@ -25,14 +25,13 @@ class ProdutoService {
                 e.printStackTrace()
             }
         }
-
         fun deleteProduto(id: Int) {
             if (!validacao.isValidProdutoId(id)) {
                 println("ID de Produto inválido!")
                 return
             }
             val sql =
-                "DELETE FROM produto WHERE id=$id"
+                "DELETE FROM produto WHERE id_produto=$id"
 
             try {
                 val statement = connection.createStatement()
@@ -43,7 +42,6 @@ class ProdutoService {
                 e.printStackTrace()
             }
         }
-
         fun updateProduto(id: Int, preco: Double) {
             try {
                 if (!validacao.isValidProdutoId(id)) {
@@ -51,7 +49,7 @@ class ProdutoService {
                     return
                 }
                 val sql =
-                    "UPDATE produto SET preco_unit='$preco' WHERE id=$id"
+                    "UPDATE produto SET preco_unit='$preco' WHERE id_produto=$id"
                 val statement = connection.createStatement()
                 statement.executeUpdate(sql)
                 println("Produto com id $id atualizado com sucesso!")
@@ -60,7 +58,6 @@ class ProdutoService {
                 e.printStackTrace()
             }
         }
-
         fun listProduto() {
             val statement = connection.createStatement()
             val resultSet = statement.executeQuery("SELECT id_produto,nome_produto, preco_unit FROM produto")

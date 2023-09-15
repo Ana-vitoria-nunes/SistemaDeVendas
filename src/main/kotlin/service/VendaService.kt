@@ -8,8 +8,7 @@ class VendaService {
     companion object {
         var connection = Connect().creatConnect()
         var validacao = Validacao()
-
-        fun addVenda(id_cliente: Int, id_vendedor: Int, id_produto: Int, qtd_produto: Int) {
+        fun addVenda(id_cliente: Int, id_vendedor: Int, id_produto: Int, qtd_produto: Int?) {
             try {
                 if (!validacao.isValidClienteId(id_cliente)) {
                     println("ID de Cliente inválido!")
@@ -23,21 +22,15 @@ class VendaService {
                     println("ID de Cliente inválido!")
                     return
                 }
-                val consultaPrecoSql = "SELECT preco_unit FROM produto WHERE id_produto = $id_produto"
-                val statementConsulta = connection.createStatement()
-                val resultadoConsulta = statementConsulta.executeQuery(consultaPrecoSql)
-
-                if (resultadoConsulta.next()) {
-                    val preco = resultadoConsulta.getDouble("preco")
-                    val valorTotal = qtd_produto * preco
-                    val sql =
-                        "INSERT INTO venda (id_cliente, id_vendedor, id_produto, qtd_produto,preco_total) VALUES ('$id_cliente', '$id_vendedor','$id_produto','$qtd_produto','$valorTotal')"
-
-                    val statement = connection.createStatement()
-                    statement.executeUpdate(sql)
-                    println("Venda adicionado com sucesso!")
-                }
-
+                val sql = """
+            INSERT INTO venda (id_cliente, id_vendedor, id_produto, qtd_produto, preco_total)
+            SELECT $id_cliente, $id_vendedor, $id_produto, $qtd_produto, Produto.preco_unit * $qtd_produto
+            FROM Produto
+            WHERE Produto.id_produto = $id_produto
+        """
+                val statement = connection.createStatement()
+                statement.executeUpdate(sql)
+                println("Venda adicionada com sucesso!")
             } catch (e: SQLException) {
                 e.printStackTrace()
             }
